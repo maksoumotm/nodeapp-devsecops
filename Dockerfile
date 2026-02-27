@@ -1,13 +1,13 @@
 FROM node:25-alpine
 
-RUN apk update && apk upgrade --no-cache
+RUN apk update && apk upgrade --no-cache && npm install -g npm@latest
 
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci --only=production
 
-COPY app.js .
+COPY . .
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
